@@ -7,14 +7,13 @@ class Settings(BaseSettings):
     DEBUG: bool = False 
 
     DATABASE_URL: str
-
     ALLOWED_ORIGINS: str
-
     GROQ_API_KEY: str 
 
     @field_validator("ALLOWED_ORIGINS")
     def parse_allowed_origins(cls, v: str) -> List[str]:
-        return v.split(",") if v else []
+        origins = [o.strip() for o in v.split(",") if o.strip()]
+        return origins
     
     class Config:
         env_file = ".env"
@@ -22,6 +21,3 @@ class Settings(BaseSettings):
         case_sensitive = True
 
 settings = Settings()
-
-
-
