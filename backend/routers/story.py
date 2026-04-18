@@ -33,7 +33,7 @@ def create_story(
 ):
     response.set_cookie(key="session_id", value=session_id, httponly=True)
 
-    job_id = str(uuid.uuid4())  # ✅ Fix 1: uuid.uuid4() sin argumentos, convertido a str
+    job_id = str(uuid.uuid4())  
 
     job = StoryJob(
         job_id=job_id,
@@ -44,8 +44,8 @@ def create_story(
     db.add(job)
     db.commit()
 
-    # TODO: add background tasks, generate story
-    background_tasks.add_task(  # ✅ Fix 2: background_tasks (con 's')
+    # TODO: 
+    background_tasks.add_task( 
         generate_story_task,
         job_id=job_id,
         theme=request.theme,
@@ -61,16 +61,16 @@ def generate_story_task(job_id: str, theme: str, session_id: str):
     try:
         job = db.query(StoryJob).filter(StoryJob.job_id == job_id).first()
 
-        if not job:  # ✅ Fix 3: "not job" en lugar de "not_job"
+        if not job:   
             return
 
-        try:  # ✅ Fix 4: indentación corregida (estaba desalineado)
+        try:  #    
             job.status = "processing"
             db.commit()
 
             story = StoryGenerator.generate_story(db, session_id, theme)
 
-            job.story_id = story.id  # TODO: Update story
+            job.story_id = story.id  # TODO:  
             job.status = "completed"
             job.completed_at = datetime.now()
             db.commit()
@@ -106,7 +106,7 @@ def build_complete_story_tree(db: Session, story: Story) -> CompleteStoryRespons
         )
         node_dict[node.id] = node_response
 
-    root_node = next((node for node in nodes if node.is_root), None)  # ✅ nodes.is_root → node.is_root
+    root_node = next((node for node in nodes if node.is_root), None)   
     if not root_node:
         raise HTTPException(status_code=500, detail="Story root node not found")
 
