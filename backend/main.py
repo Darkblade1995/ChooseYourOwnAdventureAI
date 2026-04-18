@@ -13,7 +13,7 @@ app = FastAPI(
     version="0.1.0",
     docs_url="/docs",
     redoc_url="/redoc",
-    root_path="/chooseyourownadventureai/backend/v1"
+    root_path="/chooseyourownadventureai/backend/v1.0"
 )
 
 app.add_middleware(
