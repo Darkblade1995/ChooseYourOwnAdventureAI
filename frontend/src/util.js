@@ -1,1 +1,1 @@
-export const API_BASE_URL = "/choreo-apis/chooseyourownadventureai/backend/v1/api"
+export const API_BASE_URL = "https://905e1298-5fd5-44fa-b5e4-fc195ba4cc55-dev.e1-us-east-azure.choreoapps.dev/api"
