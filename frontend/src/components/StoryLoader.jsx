@@ -1,32 +1,30 @@
 import {useState, useEffect} from 'react';
-import {useParams, useNavigate} from "react-router-dom"  // ✅ "react" → "react-router-dom"
+import {useParams, useNavigate} from "react-router-dom"
 import axios from 'axios'
 import LoadingStatus from './LoadingStatus';
 import StoryGame from './StoryGame';
-
-
-const API_BASE_URL = "/api"  // ✅ quitado "string ="
+import { API_BASE_URL } from '../util.js'  // ✅ importar desde util.js
 
 function StoryLoader() {
     const {id} = useParams();
     const navigate = useNavigate();
-    const [story, setStory] = useState(null);          // ✅ quitado "initialState="
-    const [loading, setLoading] = useState(true);      // ✅ "loading= boolean" → "loading, setLoading"
-    const [error, setError] = useState(null);          // ✅ "error= setError" → "error, setError"
+    const [story, setStory] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-    useEffect(() => {                                   // ✅ quitado "effect="
+    useEffect(() => {
         loadStory(id)
-    }, [id])                                           // ✅ quitado "deps=" y agregado ")"
+    }, [id])
 
-    const loadStory = async (storyId) => {             // ✅ quitado "=promise<void>"
-        setLoading(true)                               // ✅ quitado "value="
-        setError(null)                                 // ✅ quitado "value="
+    const loadStory = async (storyId) => {
+        setLoading(true)
+        setError(null)
 
         try {
-            const response = await axios.get(`${API_BASE_URL}/stories/${storyId}`)  // ✅ "await.axios" → "await axios"
+            const response = await axios.get(`${API_BASE_URL}/stories/${storyId}`)
             setStory(response.data)
-            setLoading(false)                          // ✅ quitado "value="
-        } catch (err) {                                // ✅ quitado "}" extra
+            setLoading(false)
+        } catch (err) {
             if (err.response?.status === 404) {
                 setError("Story is not found.")
             } else {
@@ -42,7 +40,7 @@ function StoryLoader() {
     }
 
     if (loading) {
-        return <LoadingStatus theme={"story"} />       // ✅ agregado "/>" para cerrar el tag
+        return <LoadingStatus theme={"story"} />
     }
 
     if (error) {
