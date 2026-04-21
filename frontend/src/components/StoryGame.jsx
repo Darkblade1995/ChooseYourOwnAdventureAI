@@ -9,7 +9,7 @@ function StoryGame({ story, onNewStory }) {
 
     useEffect(() => {
         if (story && story.root_node) {
-            setCurrentNodeId(story.root_node.id);
+            setCurrentNodeId(String(story.root_node.id));
         }
     }, [story]);
 
@@ -32,12 +32,12 @@ function StoryGame({ story, onNewStory }) {
     }, [currentNodeId, story]);
 
     const chooseOption = (optionId) => {
-        setCurrentNodeId(optionId);
+        setCurrentNodeId(String(optionId));
     };
 
     const restartStory = () => {
         if (story && story.root_node) {
-            setCurrentNodeId(story.root_node.id);
+            setCurrentNodeId(String(story.root_node.id));
         }
     };
 
@@ -61,7 +61,7 @@ function StoryGame({ story, onNewStory }) {
                                 </h3>
                                 <p>
                                     {isWinningEnding
-                                        ? "You reached a winning ending"
+                                        ? "You reached a winning ending!"
                                         : "Your adventure has ended."}
                                 </p>
                             </div>
